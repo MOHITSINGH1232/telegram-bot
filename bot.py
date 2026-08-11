@@ -7,7 +7,7 @@ from telegram.ext import (
     ContextTypes,
 )
 
-BOT_TOKEN = "YOUR_NEW_BOT_TOKEN"
+BOT_TOKEN = "8908724440:AAFuILuy-JkQ6AYGeSqpuLoMh919AUXfMa0"
 FEEDBACK = "MOHITSELLER0"
 
 PANELS = {
