@@ -312,24 +312,6 @@ async def retry(update: Update, context: ContextTypes.DEFAULT_TYPE):
     f"💰 ₹{price}\n\n",
         reply_markup=InlineKeyboardMarkup(buttons),
     )
-async def upi(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    q = update.callback_query
-    await q.answer()
-
-    _, key, index = q.data.split(":")
-    name, plans = PANELS[key]
-    duration, price = plans[int(index)]
-
-    await q.message.reply_photo(
-        photo=open("qr.jpg", "rb"),
-        caption=(
-            f"💰 PAYMENT\n\n"
-            f"📦 {name}\n"
-            f"⏱ {duration}\n"
-            f"💵 ₹{price}\n\n"
-            f"📲 Scan this QR and pay ₹{price}."
-        )
-    )
 def main():
     app = Application.builder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start))
