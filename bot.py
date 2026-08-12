@@ -312,6 +312,16 @@ async def retry(update: Update, context: ContextTypes.DEFAULT_TYPE):
     f"💰 ₹{price}\n\n",
         reply_markup=InlineKeyboardMarkup(buttons),
     )
+    async def expire_message(context, chat_id, message_id):
+    await asyncio.sleep(300)  # 5 minutes
+
+    try:
+        await context.bot.delete_message(
+            chat_id=chat_id,
+            message_id=message_id
+        )
+    except Exception:
+        pass
 def main():
     app = Application.builder().token(BOT_TOKEN).build()
     app.add_handler(CommandHandler("start", start))
