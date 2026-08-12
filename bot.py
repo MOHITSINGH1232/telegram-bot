@@ -319,6 +319,9 @@ def main():
     app.add_handler(CallbackQueryHandler(plan, pattern="^plan:"))
     app.add_handler(CallbackQueryHandler(buy, pattern="^buy$"))
     app.add_handler(CallbackQueryHandler(upi, pattern="^upi:"))
+    app.add_handler(CallbackQueryHandler(cancel_order, pattern="^cancel:"))
+app.add_handler(CallbackQueryHandler(verify_payment, pattern="^verify:"))
+app.add_handler(CallbackQueryHandler(retry, pattern="^retry:"))
     app.run_polling()
 if __name__ == "__main__":
     main(    )
