@@ -283,7 +283,56 @@ async def verify_payment(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "⏳ Payment verification requested.\n\n"
         "Please wait while the payment is checked."
     )
+    import asyncio
 
+async def expire_order(context, chat_id, message_id):
+    await asyncio.sleep(720)  # 12 minutes
+
+    try:
+        await context.bot.delete_message(
+            chat_id=chat_id,
+            message_id=message_id
+        )
+    except Exception:
+        pass
+
+
+async def cancel_order(update, context):
+    q = update.callback_query
+    await q.answer("Order cancelled.")
+
+    task = context.user_data.pop("payment_task", None)
+    if task:
+        task.cancel()
+
+    try:
+        await q.message.delete()
+    except Exception:
+        pass
+
+    await context.bot.send_message(
+        chat_id=q.message.chat_id,
+        text="❌ Order cancelled."
+    )
+
+
+async def verify_payment(update, context):
+    q = update.callback_query
+    await q.answer()
+
+    await q.message.reply_text(
+        "⏳ Payment verification requested."
+    )
+
+
+async def payment_success(update, context):
+    q = update.callback_query
+    await q.answer()
+
+    await q.message.reply_text(
+        "✅ PAYMENT SUCCESSFUL\n\n"
+        "Your test order has been confirmed."
+    )
 
 async def retry(update: Update, context: ContextTypes.DEFAULT_TYPE):
     q = update.callback_query
